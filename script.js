@@ -61,10 +61,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements , sort = false) {
 containerMovements.innerHTML = '';
 
-movements.forEach(function (mov,i) {
+ const movs = sort ? movements.slice().sort((a,b) => a -b) : movements;
+
+movs.forEach(function (mov,i) {
   const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -123,7 +125,17 @@ const calcDisplaySummary = function (acc) {
  .reduce((acc,int) => acc + int,0)
  labelSumInterest.textContent = `${interest}€`
 };
-// calcDisplaySummary(accounts.movements);
+const updateUI = function (acc) {
+  // display Movements
+   displayMovements(acc.movements);
+
+   // Display Balance
+   calcDisplayBalance(acc);
+
+   // Display summary
+   calcDisplaySummary(acc);
+}
+
 
 // Event handler
 
@@ -148,29 +160,80 @@ inputLoginUsername.value = inputLoginPin.value = '';
 inputLoginPin.blur();
 
 
-  // display Movements
- displayMovements(currentAccount.movements);
+  //  Update UI
+  updateUI(currentAccount);
 
-  // Display Balance 
-  calcDisplayBalance(currentAccount.movements);
-
-  // Display summary 
-  calcDisplaySummary(currentAccount);
+   
   }
 });
 
 // Transfer 
-// btnTransfer.addEventListener('click', function (e) {
+btnTransfer.addEventListener('click',function(e) {
+  e.preventDefault();
+
+ const amount = Number(inputTransferAmount.value);
+ const recieverAcc = accounts.find(acc => acc.username === inputTransferTo.value);
+
+ inputTransferAmount.value = inputTransferTo.value = '';
+
+ if (
+  amount > 0 && 
+  recieverAcc &&
+  currentAccount.balance >= amount &&
+  recieverAcc?.username !== currentAccount.username
+ ) {
+  // doing Transfer
+  currentAccount.movements.push(-amount);
+  recieverAcc.movements.push(amount);
+
+  // updateUI
+  updateUI(currentAccount);
+ }
+});
+
+// // Event Loan 
+// btnLoan.addEventListener('click',function (e) {
 //   e.preventDefault();
 
-//   const amount = Number(inputTransferAmount.value);
-//   const recieverAcc = accounts.find(acc => acc.username === inputTransferTo.value);
-//   console.log(amount,recieverAcc);
-//   // if(amount > 0 && 
-//   //   re)
+//   const amount = Number(inputLoanAmount.value);
+//   if (amount > 0 && 
+//   currentAccount.movements.some(mov => 
+//   mov >= 
+//   amount * 0.1)) {
+// //  Add Movements 
+//   currentAccount.movements.push(amount);
+//   // updateUI 
+//   updateUI(currentAccount);
+//     }
+//     inputLoanAmount.value = '';
+// });
 
+// Event Delte 
+// btnClose.addEventListener('click',function (e) {
+//   e.preventDefault();
+
+//   if (inputCloseUsername.value === currentAccount.username &&
+//   Number(inputClosePin.value === currentAccount.pin));   {   
+//    const index = accounts.findIndex(acc=> acc.username === currentAccount.username);
+//     // console.log(index);
+
+//     // Delete account 
+//      accounts.splice(index,1);
+
+//     //  hide UI 
+//   containerApp.style.opacity = 0;
+
+//   }
+//   inputCloseUsername.value = inputClosePin.value = '';
+// });
+
+// // Sortbtn 
+// let sorted = false;
+// btnSort.addEventListener('click',function (e) {
+//   e.preventDefault();
+//   displayMovements(currentAccount.movements , !sorted);
+//   sorted = !sorted;
 // })
-
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -440,3 +503,23 @@ inputLoginPin.blur();
 //   if(acc.owner === "Jessica Davis");
 // console.log(acc);
 // } 
+
+// Flat Method
+const arr = [[1,2,3],[4,5,6],7,8];
+console.log(arr.flat());
+
+
+const overalBalance = accounts.map(acc =>
+ acc.movements)
+.flat()
+.reduce((acc,mov) => acc + mov,0);
+console.log(overalBalance);
+
+// flateMap 
+const overalBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
+
+const sort = ['raju','hanzala','zaid','aqdas','maaz'];
+console.log(sort.sort());
