@@ -192,48 +192,43 @@ btnTransfer.addEventListener('click',function(e) {
 });
 
 // // Event Loan 
-// btnLoan.addEventListener('click',function (e) {
-//   e.preventDefault();
+btnLoan.addEventListener('click',function (e) {
+  e.preventDefault();
 
-//   const amount = Number(inputLoanAmount.value);
-//   if (amount > 0 && 
-//   currentAccount.movements.some(mov => 
-//   mov >= 
-//   amount * 0.1)) {
-// //  Add Movements 
-//   currentAccount.movements.push(amount);
-//   // updateUI 
-//   updateUI(currentAccount);
-//     }
-//     inputLoanAmount.value = '';
-// });
+  const amount = Number(inputLoanAmount.value);
+  if (amount > 0 && 
+  currentAccount.movements.some(mov => 
+  mov >= 
+  amount * 0.1)) {
+//  Add Movements 
+  currentAccount.movements.push(amount);
+  // updateUI 
+  updateUI(currentAccount);
+    }
+    inputLoanAmount.value = '';
+});
 
 // Event Delte 
-// btnClose.addEventListener('click',function (e) {
-//   e.preventDefault();
+btnClose.addEventListener('click',function (e) {
+  e.preventDefault();
 
-//   if (inputCloseUsername.value === currentAccount.username &&
-//   Number(inputClosePin.value === currentAccount.pin));   {   
-//    const index = accounts.findIndex(acc=> acc.username === currentAccount.username);
-//     // console.log(index);
+  if (inputCloseUsername.value === currentAccount.username &&
+  Number(inputClosePin.value === currentAccount.pin));   {   
+   const index = accounts.findIndex(acc=> acc.username === currentAccount.username);
+    // console.log(index);
 
-//     // Delete account 
-//      accounts.splice(index,1);
+    // Delete account 
+     accounts.splice(index,1);
 
-//     //  hide UI 
-//   containerApp.style.opacity = 0;
+    //  hide UI 
+  containerApp.style.opacity = 0;
 
-//   }
-//   inputCloseUsername.value = inputClosePin.value = '';
-// });
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
+});
 
-// // Sortbtn 
-// let sorted = false;
-// btnSort.addEventListener('click',function (e) {
-//   e.preventDefault();
-//   displayMovements(currentAccount.movements , !sorted);
-//   sorted = !sorted;
-// })
+// Sortbtn 
+// 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -505,21 +500,113 @@ btnTransfer.addEventListener('click',function(e) {
 // } 
 
 // Flat Method
-const arr = [[1,2,3],[4,5,6],7,8];
-console.log(arr.flat());
+// const arr = [[1,2,3],[4,5,6],7,8];
+// console.log(arr.flat());
 
 
-const overalBalance = accounts.map(acc =>
- acc.movements)
-.flat()
-.reduce((acc,mov) => acc + mov,0);
-console.log(overalBalance);
+// const overalBalance = accounts.map(acc =>
+//  acc.movements)
+// .flat()
+// .reduce((acc,mov) => acc + mov,0);
+// console.log(overalBalance);
 
-// flateMap 
-const overalBalance2 = accounts
-  .flatMap(acc => acc.movements)
-  .reduce((acc, mov) => acc + mov, 0);
-console.log(overalBalance);
+// // flateMap 
+// const overalBalance2 = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce((acc, mov) => acc + mov, 0);
+// console.log(overalBalance);
 
-const sort = ['raju','hanzala','zaid','aqdas','maaz'];
-console.log(sort.sort());
+// const sort = ['raju','hanzala','zaid','aqdas','maaz'];
+// console.log(sort.sort());
+
+// // const arrr = [1, 2, 3,4, 5, 6, 7, 8];
+
+// console.log(new Array(1, 2, 3, 4, 5, 6, 7, 8));
+
+// const x = new Array(7);
+// x.fill(1);
+// // x.fill(23, 5);
+
+// console.log(x);
+
+// // ARRAY From 
+// // const y = Array.from({length : 7}, () => 1);
+// const y = Array.from({length : 7}, (cur,i) => i + 1);
+//   console.log(y);
+
+  ///////////
+
+  // const bankDepositSum = accounts.
+  // flatMap(acc => acc.movements)
+  // .filter(mov => mov > 0 )
+  // .reduce((sum,cur) => sum + cur,0);
+  // console.log(bankDepositSum);
+
+  // 2
+  // const numDeposit1000 = accounts.flatMap(acc => acc.movements)
+  // .filter(mov => mov > 1000).length;
+  // console.log(numDeposit1000);
+
+  // const numDeposit1000 = accounts.flatMap(acc => acc.movements)
+  // // .reduce((count,cur) => cur >= 1000 ? count + 1 : count ,0);  
+  // .reduce((count,cur) => cur >= 1000 ? ++count  : count ,0);  
+  // console.log(numDeposit1000);
+
+  // const sums = accounts
+  // .flatMap(acc => acc.accounts)
+  // .reduce((sums,cur) => {
+  //   // cur > 0 ? (sums.deposit += cur) : (sums.withdrawal += cur);
+  //   [cur > 0 ? 'deposit' : 'withdrawal'];
+  //   return sums;
+  // },
+  // {deposits: 0, withdrawal: 0},
+  // );
+  // console.log(sums);
+
+  //  Coding Challenge #4 
+
+//  const dogs = [
+//    { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+//    { weight: 8, curFood: 200, owners: ['Matilda'] },
+//    { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+//    { weight: 32, curFood: 340, owners: ['Michael'] },
+//  ];
+// // 1)
+//  dogs.forEach(dog => (dog.recFood = Math.trunc(dog.weight ** 0.75 * 28)));
+// //  console.log(dogs);
+// // 2)
+// const dogSarah = dogs.find(dog => dog.owners.includes('Sarah'));
+// console.log(dogSarah); 
+// console.log(`Sarah's dog eat too ${dogSarah.curFood > dogSarah.recFood ? 'Much' : 'Little'} `);
+
+// // 3)
+
+// const ownersEatTooMuch = dogs.filter(dog => dog.curFood > dog.recFood)
+// .flatMap(dog => dog.owners);
+// console.log(ownersEatTooMuch);
+
+// const ownersEatTooLittle = dogs.filter(dog => dog.curFood < dog.recFood)
+// .flatMap(dog => dog.owners);
+// console.log(ownersEatTooLittle);
+
+// // 4)
+
+// console.log(`${ownersEatTooMuch.join(' and ')}'s dog eat to much!`);
+// console.log(`${ownersEatTooLittle.join(' and ')}'s dog eat to little!`);
+ 
+// // 5)
+// console.log(dogs.some(dog => dog.curFood === dog.recFood));
+
+// // 6)
+// // means: current > (recommended * 0.90) && current < (recommended * 1.10).
+// const checkEatingOkay = dog => dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.10;
+// console.log(
+//   dogs.some(checkEatingOkay)
+// );
+
+// // 7)
+// console.log(dogs.filter(checkEatingOkay));
+
+// // 8)
+// const dogsSorted = dogs.slice().sort((a,b) => a.recFood - b.recFood);
+// console.log(dogsSorted);
