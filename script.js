@@ -177,8 +177,28 @@ const updateUI = function (acc) {
 };
 
 ///////////////////////////////////////
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${sec}`;
+
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    time--;
+  };
+
+  let time = 600;
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
 // Event handlers
-let currentAccount;
+let currentAccount,timer;
 // fake login View
 //  currentAccount = account1;
 // updateUI(currentAccount);
@@ -229,7 +249,10 @@ btnLogin.addEventListener('click', function (e) {
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
-
+   
+    if(timer)clearInterval(timer);
+    timer = startLogOutTimer();
+    
     // Update UI
     updateUI(currentAccount);
   }
@@ -267,16 +290,22 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    setTimeout(function () // Add movement
-    {
-      currentAccount.movements.push(amount);
+  
+    setTimeout(function ()
+    // Add movement
+   {
+     currentAccount.movements.push(amount);
 
-      // Add loan Date
-      currentAccount.movementsDates.push(new Date().toISOString());
+     // Add loan Date
+     currentAccount.movementsDates.push(new Date().toISOString());
 
-      // Update UI
-      updateUI(currentAccount);
-    }, 3000);
+     // Update UI
+     updateUI(currentAccount);
+
+    // Reset Timer
+    clearInterval(timer);
+     timer = startLogOutTimer();
+   },2500);
   }
   inputLoanAmount.value = '';
 });
