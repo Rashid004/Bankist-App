@@ -767,3 +767,4 @@ console.log((2.543).toFixed(0));
 console.log((2.543).toFixed(2));
 console.log((2.543).toFixed(3));
 console.log((2.543).toFixed(1));
+
